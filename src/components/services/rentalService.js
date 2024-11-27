@@ -1,23 +1,39 @@
 import axiosInstance from './axiosInstance';
 
 export const getRentals = async () => {
-    const response = await axiosInstance.get('/rentals');
-    return response.data;
+    try {
+        const response = await axiosInstance.get('/rentals');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al obtener rentas');
+    }
 };
 
 export const createRental = async (rental) => {
-    const response = await axiosInstance.post('/rentals', rental);
-    return response.data;
+    try {
+        const response = await axiosInstance.post('/rentals', rental);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al crear renta');
+    }
 };
 
 export const returnRental = async (id) => {
-    const response = await axiosInstance.put(`/rentals/return/${id}`);
-    return response.data;
+    try {
+        const response = await axiosInstance.put(`/rentals/return/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al finalizar renta');
+    }
 };
 
 export const getRentalReport = async (startDate, endDate) => {
-    const response = await axiosInstance.get('/rentals/report', {
-        params: { startDate, endDate },
-    });
-    return response.data;
+    try {
+        const response = await axiosInstance.get('/rentals/report', {
+            params: { startDate, endDate },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al generar informe de rentas');
+    }
 };

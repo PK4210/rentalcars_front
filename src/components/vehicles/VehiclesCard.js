@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { getVehicles } from '../services/vehicleService';
+import React from 'react';
+import './Vehicles.css';
 
-const Vehicles = () => {
-    const [vehicles, setVehicles] = useState([]);
-
-    useEffect(() => {
-        const fetchVehicles = async () => {
-            try {
-                const data = await getVehicles();
-                setVehicles(data);
-            } catch (error) {
-                console.error(error.message);
-            }
-        };
-
-        fetchVehicles();
-    }, []);
-
+const VehiclesCard = ({ vehicle }) => {
     return (
-        <div>
-            <h1>Vehículos</h1>
-            <ul>
-                {vehicles.map((vehicle) => (
-                    <li key={vehicle.vehicleId}>{vehicle.model}</li>
-                ))}
-            </ul>
+        <div className="vehicle-card">
+            <h2>{vehicle.model}</h2>
+            <p><strong>Año:</strong> {vehicle.year}</p>
+            <p><strong>Precio por día:</strong> ${vehicle.price}</p>
+            <p><strong>Color:</strong> {vehicle.color}</p>
+            <p><strong>Asientos:</strong> {vehicle.seats}</p>
+            <p><strong>Placa:</strong> {vehicle.licensePlate}</p>
+            <p><strong>Disponible:</strong> {vehicle.available ? 'Sí' : 'No'}</p>
         </div>
     );
 };
 
-export default Vehicles;
+export default VehiclesCard;

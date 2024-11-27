@@ -7,22 +7,38 @@ const Login = () => {
     const [error, setError] = useState('');
 
     const handleLogin = async () => {
+        if (!username || !password) {
+            setError('Por favor, complete todos los campos.');
+            return;
+        }
+
         try {
-            const data = await login(username, password);
-            localStorage.setItem('user', JSON.stringify(data.User));
+            const userData = await login(username, password);
+            localStorage.setItem('user', JSON.stringify(userData));
             alert('Inicio de sesión exitoso');
-            window.location.href = '/vehicles';
-        } catch (error) {
-            setError(error.message);
+            window.location.href = '/';
+        } catch (err) {
+            setError('Usuario o contraseña incorrectos');
         }
     };
 
     return (
         <div>
-            <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-            {error && <p>{error}</p>}
-            <button onClick={handleLogin}>Iniciar Sesión</button>
+            <h1>Iniciar Sesión</h1>
+            <input
+                type="text"
+                placeholder="Usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button onClick={handleLogin}>Entrar</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 };

@@ -1,13 +1,21 @@
 import axiosInstance from './axiosInstance';
 
 export const getRentedVehicles = async (startDate, endDate) => {
-    const response = await axiosInstance.get('/reports/rentedvehicles', {
-        params: { startDate, endDate },
-    });
-    return response.data;
+    try {
+        const response = await axiosInstance.get('/reports/rentedvehicles', {
+            params: { startDate, endDate },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al obtener vehículos rentados');
+    }
 };
 
 export const getOverdueRentals = async () => {
-    const response = await axiosInstance.get('/reports/overduerentals');
-    return response.data;
+    try {
+        const response = await axiosInstance.get('/reports/overduerentals');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error al obtener rentas vencidas');
+    }
 };

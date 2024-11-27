@@ -1,9 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        navigate('/login');
+    };
+
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">PK Cars</Link>
                 <button
@@ -18,7 +25,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="NavbarRental">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="/">Inicio</Link>
+                            <Link className="nav-link" to="/">Inicio</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown">
@@ -31,7 +38,7 @@ const Navbar = () => {
                             </ul>
                         </li>
                     </ul>
-                    <button className="btn btn-danger" onClick={() => localStorage.removeItem('user')}>Cerrar sesión</button>
+                    <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>
                 </div>
             </div>
         </nav>
