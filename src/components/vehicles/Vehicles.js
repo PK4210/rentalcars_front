@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getVehicles } from '../../services/vehicleService';
-import VehicleCards from ''
+import VehiclesCard from './VehiclesCard';
 import './Vehicles.css';
 
 const Vehicles = () => {
