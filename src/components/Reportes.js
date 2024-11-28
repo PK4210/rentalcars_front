@@ -12,6 +12,11 @@ const Reportes = () => {
 
     const handleFetchRentedVehicles = async () => {
         try {
+            if (!startDate || !endDate) {
+                setError("Por favor selecciona ambas fechas.");
+                return;
+            }
+
             const formattedStartDate = new Date(startDate).toISOString();
             const formattedEndDate = new Date(endDate).toISOString();
 
@@ -23,7 +28,6 @@ const Reportes = () => {
             console.error(err.message);
         }
     };
-
 
     const handleFetchOverdueRentals = async () => {
         try {
@@ -83,18 +87,18 @@ const Reportes = () => {
                         <tbody>
                         {rentedVehicles.length > 0 ? (
                             rentedVehicles.map((rental) => (
-                                <tr key={rental.RentalId}>
-                                    <td>{rental.User?.username || "Desconocido"}</td>
-                                    <td>{rental.Vehicle?.model || "Desconocido"}</td>
+                                <tr key={rental.rentalId}>
+                                    <td>{rental.user?.username || "Desconocido"}</td>
+                                    <td>{rental.vehicle?.model || "Desconocido"}</td>
                                     <td>
                                         {new Intl.NumberFormat("es-PY", {
                                             style: "currency",
                                             currency: "PYG",
-                                        }).format(rental.TotalPrice)}
+                                        }).format(rental.totalPrice || 0)}
                                     </td>
-                                    <td>{rental.TotalDays}</td>
-                                    <td>{new Date(rental.StartDate).toLocaleDateString()}</td>
-                                    <td>{new Date(rental.EndDate).toLocaleDateString()}</td>
+                                    <td>{rental.totalDays || "N/A"}</td>
+                                    <td>{new Date(rental.startDate).toLocaleDateString("es-ES")}</td>
+                                    <td>{new Date(rental.endDate).toLocaleDateString("es-ES")}</td>
                                 </tr>
                             ))
                         ) : (
@@ -124,23 +128,29 @@ const Reportes = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {rentedVehicles.map((rental) => (
-                            <tr key={rental.RentalId}>
-                                <td>{rental.User?.username || "Desconocido"}</td>
-                                <td>{rental.Vehicle?.model || "Desconocido"}</td>
-                                <td>
-                                    {new Intl.NumberFormat("es-PY", {
-                                        style: "currency",
-                                        currency: "PYG",
-                                    }).format(rental.TotalPrice || 0)}
+                        {overdueRentals.length > 0 ? (
+                            overdueRentals.map((rental) => (
+                                <tr key={rental.rentalId}>
+                                    <td>{rental.user?.username || "Desconocido"}</td>
+                                    <td>{rental.vehicle?.model || "Desconocido"}</td>
+                                    <td>{rental.overdueDays || "N/A"}</td>
+                                    <td>{new Date(rental.endDate).toLocaleDateString("es-ES")}</td>
+                                    <td>
+                                        {new Intl.NumberFormat("es-PY", {
+                                            style: "currency",
+                                            currency: "PYG",
+                                        }).format(rental.totalPrice || 0)}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-center">
+                                    No hay datos disponibles.
                                 </td>
-                                <td>{rental.TotalDays || "N/A"}</td>
-                                <td>{new Date(rental.StartDate).toLocaleDateString("es-ES")}</td>
-                                <td>{new Date(rental.EndDate).toLocaleDateString("es-ES")}</td>
                             </tr>
-                        ))}
+                        )}
                         </tbody>
-
                     </table>
                 </div>
             </div>
