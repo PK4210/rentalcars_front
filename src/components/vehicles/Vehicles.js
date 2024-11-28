@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getVehicles } from '../../services/vehicleService';
+import { getVehicles } from '../services/vehicleService'
 import VehiclesCard from './VehiclesCard';
 import './Vehicles.css';
 

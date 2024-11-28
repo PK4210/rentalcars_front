@@ -1,0 +1,21 @@
+.container {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #bb2d3b;
+}

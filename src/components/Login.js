@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { login } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
+import { login } from './services/authservice';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         if (!username || !password) {
@@ -14,9 +16,9 @@ const Login = () => {
 
         try {
             const userData = await login(username, password);
-            localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('token', userData.token); // Guarda el token JWT
             alert('Inicio de sesión exitoso');
-            window.location.href = '/';
+            navigate('/home'); // Redirige a Home
         } catch (err) {
             setError('Usuario o contraseña incorrectos');
         }
